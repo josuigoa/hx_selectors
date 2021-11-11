@@ -1,0 +1,18 @@
+{
+	"name": "hx_selectors",
+	"classPath": "src",
+	"url": "https://github.com/josuigoa/hx_selectors/",
+	"contributors": [
+		"josuigoa"
+	],
+	"version": "1.0.0",
+	"releasenote": "first commit",
+	"tags": [
+		"javascript",
+		"selectors",
+		"html",
+		"css",
+		"macro"
+	],
+	"license": "GPL"
+}
