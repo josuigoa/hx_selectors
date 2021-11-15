@@ -12,7 +12,15 @@ index.html
 ```html
 <input id="my-input">
 
-<div class="hidden"></div>
+<div class="hidden">
+    <div id="first_hidden_child"></div>
+    <div id="second_hidden_child"></div>
+</div>
+
+<div id="my_template">
+    <div class="template_child"></div>
+    <div class="template_child"></div>
+</div>
 ```
 
 Main.hx
@@ -23,4 +31,13 @@ trace(Id.my_input.as(InputElement).value);
 var hiddenElements = Cls.hidden.get();
 for (h in hiddenElements)
   h.classList.remove(Cls.hidden);
+
+// Gets the first element from the array of the elements containing "template_child" class inside the element with "my_template" id
+// converts in compile time to js.Browser.getElementById("my_template").getElementsByClassName("template_child")[0]
+switch Cls.template_child.firstFrom(Id.my_template.get()) {
+    case Some(elementFound):
+        // do something with the element
+    case None:
+        trace('No ${Cls.template_child.selector()} found in ${Id.my_template.selector()}');
+}
 ```

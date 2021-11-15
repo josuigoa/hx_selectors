@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.0",
-	"releasenote": "first commit",
+	"version": "1.0.1",
+	"releasenote": "added Cls.from and Tag.from",
 	"tags": [
 		"javascript",
 		"selectors",
