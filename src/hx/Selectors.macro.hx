@@ -18,6 +18,8 @@ class Selectors {
 	static var CSS_CLASS = ~/\.{1}([a-z][a-z0-9\-_]+)/;
 	static public var INVALID_CHARS = ~/[^A-Za-z0-9_]/g;
 
+	static final filePrefix = "file:///" + haxe.io.Path.normalize(Sys.getCwd()) + '/';
+
 	static public function buildId()
 		return build(ID_ATTR, id);
 
@@ -54,23 +56,34 @@ class Selectors {
 		if (extraString != null)
 			extra = [for (e in extraString.split(',')) if (e.trim() != '') e.trim()];
 
-		var fileContent, elements = new Map<String, Elem>(), el, clsElem;
+		var fileContent;
+		var elements = new Map<String, Elem>();
+		var el;
+		var ln;
+		var clsElem;
+		var lines;
+		var line;
 		for (p in paths) {
 			fileContent = getFileContent(p);
 			if (p.endsWith(fileExt)) {
-				while (ereg.match(fileContent)) {
-					el = ereg.matched(1);
-					if (type == cls) {
-						clsElem = el.split(' ');
-						for (ce in clsElem) {
-							elements.remove(ce);
-							elements.set(ce, new Elem(ce, p));
+				lines = ~/\r?\n/g.split(fileContent);
+				for (lidx in 0...lines.length) {
+					ln = lidx + 1;
+					line = lines[lidx];
+					while (ereg.match(line)) {
+						el = ereg.matched(1);
+						if (type == cls) {
+							clsElem = el.split(' ');
+							for (ce in clsElem) {
+								elements.remove(ce);
+								elements.set(ce, new Elem(ce, p, ln));
+							}
+						} else {
+							elements.remove(el);
+							elements.set(el, new Elem(el, p, ln));
 						}
-					} else {
-						elements.remove(el);
-						elements.set(el, new Elem(el, p));
+						line = ereg.matchedRight();
 					}
-					fileContent = ereg.matchedRight();
 				}
 			}
 			if (extra != null) {
@@ -78,7 +91,7 @@ class Selectors {
 					if (StringTools.trim(e) == '')
 						continue;
 					elements.remove(e);
-					elements.set(e, new Elem(e, p));
+					elements.set(e, new Elem(e, p, 0));
 				}
 			}
 		}
@@ -96,13 +109,15 @@ class Selectors {
 			case tag: macro
 			:hx.Selectors.TagSel;
 		}
+		var fileFullPath;
 		for (f in _fieldNames) {
+			fileFullPath = filePrefix + f.file + '#L${f.lineNumber}';
 			fields.push({
 				name: INVALID_CHARS.replace(f.name, '_'),
 				access: [APublic, AStatic, AInline],
 				meta: [{name: ':dce', params: [], pos: pos}],
 				pos: pos,
-				doc: '"${f.name}" selector from "${f.origin}" file.',
+				doc: '"${f.name}" selector from "[${f.file} line ${f.lineNumber}]($fileFullPath)" file. ',
 				kind: FVar(varComplexType, macro $v{f.name})
 			});
 		}
@@ -122,10 +137,12 @@ class Selectors {
 
 private class Elem {
 	public var name:String;
-	public var origin:String;
+	public var file:String;
+	public var lineNumber:UInt;
 
-	public function new(n, o) {
+	public function new(n, f, ln) {
 		name = n;
-		origin = o;
+		file = f;
+		lineNumber = ln;
 	}
 }

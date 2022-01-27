@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.1",
-	"releasenote": "added Cls.from and Tag.from",
+	"version": "1.0.2",
+	"releasenote": "Link to the line where the selector was extracted",
 	"tags": [
 		"javascript",
 		"selectors",
