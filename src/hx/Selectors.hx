@@ -97,10 +97,10 @@ abstract ClsSel(String) to String from String {
 	}
 
 	/**
-	 *  @return js.Browser.document.querySelector(this + ' ' + extraSelector)
+	 *  @return js.Browser.document.querySelector(this + extraSelector)
 	 */
 	inline public function specify(extraSelector:String)
-		return document.querySelector(selector() + ' $extraSelector');
+		return document.querySelector(selector() + '$extraSelector');
 }
 
 abstract TagSel(String) to String from String {
@@ -144,8 +144,8 @@ abstract TagSel(String) to String from String {
 	}
 
 	/**
-	 *  @return js.Browser.document.querySelector(this + ' ' + extraSelector)
+	 *  @return js.Browser.document.querySelector(this + extraSelector)
 	 */
 	inline public function specify(extraSelector:String)
-		return document.querySelector(selector() + ' $extraSelector');
+		return document.querySelector(selector() + '$extraSelector');
 }

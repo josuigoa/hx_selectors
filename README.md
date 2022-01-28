@@ -27,6 +27,7 @@ Main.hx
 ```haxe
 // converts in compile time to js.Browser.document.getElementById("my-input").value
 trace(Id.my_input.as(InputElement).value);
+
 // converts in compile time to js.Browser.document.getElementsByClassName("hidden")
 var hiddenElements = Cls.hidden.get();
 for (h in hiddenElements)
@@ -40,4 +41,9 @@ switch Cls.template_child.firstFrom(Id.my_template.get()) {
     case None:
         trace('No ${Cls.template_child.selector()} found in ${Id.my_template.selector()}');
 }
+
+// More specific search
+Tag.input.specify('[type="text"]').addEventListener('keyup', (e) -> {
+    // do something
+});
 ```

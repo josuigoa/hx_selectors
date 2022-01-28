@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.2",
-	"releasenote": "Link to the line where the selector was extracted",
+	"version": "1.0.3",
+	"releasenote": "fix Tag.specify and Cls.specify",
 	"tags": [
 		"javascript",
 		"selectors",
