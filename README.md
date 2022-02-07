@@ -1,6 +1,6 @@
 # hx_selectors
 
-This library parses `html` and `css` files defined in the `hxml` file and extracts the `id` and `class` elements to create a type-safe access.
+This library parses `html` and `css` files defined in the `hxml` file and extracts the `id` and `class` elements to create a static access for the elements. If some of the referenced `id` or `class` element is removed from the `html` or `css` file, a compilation error is thrown.
 
 build.hxml
 ```
